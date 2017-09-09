@@ -40,6 +40,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef __CELLOS_LV2__
+#include "libretro.h"
+#endif
+
 #define OFF_T_MSB ((off_t)1 << (sizeof(off_t) * 8 - 1))
 
 unsigned int cdrIsoMultidiskCount;

@@ -9,10 +9,14 @@
 #include <string.h>
 #include <stdarg.h>
 #include <unistd.h>
-#include <signal.h>
+
 #include <time.h>
 #if !defined(_WIN32) && !defined(NO_DYLIB)
 #include <dlfcn.h>
+#endif
+
+#ifndef __CELLOS_LV2__
+#include <signal.h>
 #endif
 
 #include "main.h"

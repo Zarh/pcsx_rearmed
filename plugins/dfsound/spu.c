@@ -31,6 +31,10 @@
 #include "out.h"
 #include "spu_config.h"
 
+#ifdef __CELLOS_LV2__
+#include "libretro.h"
+#endif
+
 #ifdef __arm__
 #include "arm_features.h"
 #endif

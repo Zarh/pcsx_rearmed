@@ -43,6 +43,19 @@ extern "C" {
 #endif
 #endif
 
+#ifdef __CELLOS_LV2__
+#include <sys/time.h>
+#include <sys/sys_time.h>
+#include <sys/timer.h>
+#define usleep  sys_timer_usleep
+void FAKEgettimeofday(struct timeval *x, int unused);
+#define gettimeofday FAKEgettimeofday
+#define sysconf(x) -1
+#define _SC_NPROCESSORS_ONLN 0
+#define fseeko fseek
+#define ftello ftell
+#endif
+
 #ifndef RETRO_CALLCONV
 #  if defined(__GNUC__) && defined(__i386__) && !defined(__x86_64__)
 #    define RETRO_CALLCONV __attribute__((cdecl))

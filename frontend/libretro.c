@@ -9,7 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef __CELLOS_LV2__ 
 #include <strings.h>
+#endif
+
 #ifdef __MACH__
 #include <unistd.h>
 #include <sys/syscall.h>
@@ -95,6 +99,18 @@ static void vout_close(void){}
 static int snd_init(void){return 0;}
 static void snd_finish(void){}
 static int snd_busy(void){return 0;}
+
+#ifdef __CELLOS_LV2__
+void FAKEgettimeofday(struct timeval *x, int unused)
+{
+	sys_time_sec_t s;
+	sys_time_nsec_t ns;
+	sys_time_get_current_time(&s, &ns);
+	
+	x->tv_sec = s;
+	x->tv_usec = ns / 1000;
+}
+#endif
 
 static void init_memcard(char *mcd_data)
 {
@@ -982,7 +998,7 @@ static void extract_directory(char *buf, const char *path, size_t size)
    }
 }
 
-#if defined(__QNX__) || defined(_WIN32)
+#if defined(__QNX__) || defined(_WIN32) || defined(__CELLOS_LV2__)
 /* Blackberry QNX doesn't have strcasestr */
 
 /*

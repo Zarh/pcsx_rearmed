@@ -22,6 +22,9 @@
 */
 
 #include "sio.h"
+#ifdef __CELLOS_LV2__
+#include <unistd.h>
+#endif
 #include <sys/stat.h>
 
 // Status Flags
